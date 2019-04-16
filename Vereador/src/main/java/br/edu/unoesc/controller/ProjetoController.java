@@ -1,8 +1,5 @@
 package br.edu.unoesc.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -14,7 +11,6 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.edu.unoesc.dao.ProjetoJDBC;
 import br.edu.unoesc.dao.VereadorJDBC;
-import br.edu.unoesc.model.Pessoa;
 import br.edu.unoesc.model.Projeto;
 import br.edu.unoesc.model.Vereador;
 
@@ -55,6 +51,12 @@ public class ProjetoController {
 		}else {
 			projeto.setApresentado(false);
 		}
+
+		VereadorJDBC jdbcVereador = new VereadorJDBC() ;
+		Vereador vereador =  jdbcVereador.buscar(Vereador.class, (long)projeto.getVereador().getCodigo());
+		vereador.adicionaProjeto(projeto);
+		jdbcVereador.alterar(vereador);
+		
 		jdbc.inserir(projeto);
 		result.include("projetos", jdbc.listar(Projeto.listarTodos, Projeto.class));
 	}

@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.inject.Inject;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
@@ -16,7 +14,6 @@ import br.com.caelum.vraptor.Result;
 import br.edu.unoesc.dao.PartidoJDBC;
 import br.edu.unoesc.dao.VereadorJDBC;
 import br.edu.unoesc.model.Partido;
-import br.edu.unoesc.model.Projeto;
 import br.edu.unoesc.model.Vereador;
 
 @Controller

@@ -38,15 +38,27 @@ public class Vereador extends Pessoa {
 	}
 	
 	public Integer qtdeProjetosAprovados(){
-		return null;
+		Integer contador = 0;
+		for (Projeto projeto : projetos) {
+			if(projeto.isAprovado()) {
+				contador++;
+			}
+		}
+		return contador;
 	}
 	
-	public Integer adicionaProjeto(Projeto projeto){
-		return null;
+	public void adicionaProjeto(Projeto projeto){
+		projetos.add(projeto);
 	}
 	
 	public Float desempenho(){
-		return null;
+		Integer ap = 0;
+		for (Projeto projeto : projetos) {
+			if(projeto.isAprovado()) {
+				ap++;
+			}
+		}
+		return (float)((ap*100.0)/projetos.size());
 	}
 
 	public Vereador(Date dataAssociacao, Partido partido, Set<Projeto> projetos) {
