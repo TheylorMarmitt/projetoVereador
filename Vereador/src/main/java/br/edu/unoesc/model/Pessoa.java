@@ -15,10 +15,10 @@ public class Pessoa {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int codigo;
+	private long codigo;
 	private String nome;
 
-	public Pessoa(int codigo, String nome) {
+	public Pessoa(long codigo, String nome) {
 		super();
 		this.codigo = codigo;
 		this.nome = nome;
@@ -28,7 +28,7 @@ public class Pessoa {
 
 	}
 
-	public int getCodigo() {
+	public long getCodigo() {
 		return codigo;
 	}
 

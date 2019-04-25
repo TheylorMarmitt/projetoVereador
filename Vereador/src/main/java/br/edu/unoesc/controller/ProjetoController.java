@@ -53,7 +53,7 @@ public class ProjetoController {
 		}
 
 		VereadorJDBC jdbcVereador = new VereadorJDBC() ;
-		Vereador vereador =  jdbcVereador.buscar(Vereador.class, (long)projeto.getVereador().getCodigo());
+		Vereador vereador =  jdbcVereador.buscar(Vereador.class, projeto.getVereador().getCodigo());
 		vereador.adicionaProjeto(projeto);
 		jdbcVereador.alterar(vereador);
 		

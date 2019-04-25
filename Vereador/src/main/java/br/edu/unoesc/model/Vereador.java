@@ -34,7 +34,13 @@ public class Vereador extends Pessoa {
 	public static final String listarTodos = "buscarTodosVereadores";
 	
 	public Integer qtdeProjetosApresentados(){
-		return null;
+		Integer contador = 0;
+		for (Projeto projeto : projetos) {
+			if(projeto.isApresentado()) {
+				contador++;
+			}
+		}
+		return contador;
 	}
 	
 	public Integer qtdeProjetosAprovados(){
@@ -51,14 +57,17 @@ public class Vereador extends Pessoa {
 		projetos.add(projeto);
 	}
 	
-	public Float desempenho(){
+	public Double desempenho(){
 		Integer ap = 0;
 		for (Projeto projeto : projetos) {
 			if(projeto.isAprovado()) {
 				ap++;
 			}
 		}
-		return (float)((ap*100.0)/projetos.size());
+		if (projetos.isEmpty()){
+			return (double)0;
+		}
+		return (double)((ap*100.0)/projetos.size());
 	}
 
 	public Vereador(Date dataAssociacao, Partido partido, Set<Projeto> projetos) {

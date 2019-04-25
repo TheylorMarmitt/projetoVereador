@@ -15,13 +15,13 @@ public class Partido {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int codigo;
+	private long codigo;
 	private String numero;
 	private String nome;
 	
 	public static final String listarTodos = "buscarTodosPartidos";
 
-	public Partido(int codigo, String numero, String nome) {
+	public Partido(long codigo, String numero, String nome) {
 		super();
 		this.codigo = codigo;
 		this.setNumero(numero);
@@ -32,7 +32,7 @@ public class Partido {
 
 	}
 
-	public int getCodigo() {
+	public long getCodigo() {
 		return codigo;
 	}
 

@@ -17,7 +17,7 @@ public class Projeto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int codigo;
+	private long codigo;
 	private String nome;
 	private boolean aprovado;
 	private boolean apresentado;
@@ -28,7 +28,7 @@ public class Projeto {
 	@JoinColumn(name = "vereador_id")
 	private Vereador vereador;
 
-	public Projeto(int codigo, String nome, boolean aprovado, boolean apresentado, Vereador vereador) {
+	public Projeto(long codigo, String nome, boolean aprovado, boolean apresentado, Vereador vereador) {
 		super();
 		this.codigo = codigo;
 		this.nome = nome;
@@ -40,7 +40,7 @@ public class Projeto {
 	public Projeto() {
 	}
 
-	public int getCodigo() {
+	public long getCodigo() {
 		return codigo;
 	}
 

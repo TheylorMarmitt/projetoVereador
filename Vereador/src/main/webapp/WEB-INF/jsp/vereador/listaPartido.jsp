@@ -43,6 +43,9 @@
 		    <th >Nome</th> 
 		    <th >Data de associação</th>
 		    <th >Partido</th>
+		    <th >Projetos aprovados</th>
+		    <th >Projetos apresentados</th>
+		    <th >Desempenho</th>
 		  </tr>
 			<c:forEach var="v" items="${vereadores}">
   				<tr>	
@@ -50,6 +53,9 @@
 	    			<td >${v.nome}</td>
 	    			<td >${v.dataAssociacao}</td>
 	    			<td >${v.partido.nome}</td>
+	    			<td >${v.qtdeProjetosAprovados()}</td>
+	    			<td >${v.qtdeProjetosApresentados()}</td>
+	    			<td >${v.desempenho()}</td>
   				</tr>
 			</c:forEach>
 	</table>
