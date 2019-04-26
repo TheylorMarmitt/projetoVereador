@@ -1,42 +1,39 @@
 package br.edu.unoesc.controller;
 
 import javax.inject.Inject;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
-import br.edu.unoesc.dao.ProjetoJDBC;
-import br.edu.unoesc.dao.VereadorJDBC;
+import br.edu.unoesc.dao.ProjetoDao;
+import br.edu.unoesc.dao.VereadorDao;
 import br.edu.unoesc.model.Projeto;
 import br.edu.unoesc.model.Vereador;
 
 @Controller
 @Path("/projeto")
-@NamedQueries({ @NamedQuery(name = Projeto.listarTodos, query = "select pro from Projeto pro") })
 public class ProjetoController {
 
 	private Result result;
-	private ProjetoJDBC jdbc;
-	
+	private ProjetoDao dao;
+	private VereadorDao daoVereador;
 
 	public ProjetoController() {
 
 	}
 
 	@Inject
-	public ProjetoController(Result result, ProjetoJDBC jdbc) {
+	public ProjetoController(Result result, ProjetoDao dao, VereadorDao daoVereador) {
 		this.result = result;
-		this.jdbc = jdbc;
+		this.dao = dao;
+		this.daoVereador = daoVereador;
 	}
 	
 	@Get("/cadastro")
 	public void novo() {
-		VereadorJDBC jdbcVereador = new VereadorJDBC() ;
-		result.include("vereadores", jdbcVereador.listar(Vereador.listarTodos, Vereador.class));
+		result.include("vereadores", this.dao.vereadores());
 	}
 	
 	@Post("/enviar")
@@ -52,23 +49,27 @@ public class ProjetoController {
 			projeto.setApresentado(false);
 		}
 
-		VereadorJDBC jdbcVereador = new VereadorJDBC() ;
-		Vereador vereador =  jdbcVereador.buscar(Vereador.class, projeto.getVereador().getCodigo());
-		vereador.adicionaProjeto(projeto);
-		jdbcVereador.alterar(vereador);
+//		VereadorJDBC jdbcVereador = new VereadorJDBC() ;
+//		Vereador vereador =  jdbcVereador.buscar(Vereador.class, projeto.getVereador().getCodigo());
+//		vereador.adicionaProjeto(projeto);
+//		jdbcVereador.alterar(vereador);
 		
-		jdbc.inserir(projeto);
-		result.include("projetos", jdbc.listar(Projeto.listarTodos, Projeto.class));
+		Vereador vereador = this.dao.buscaPorId(projeto.getVereador().getCodigo());
+		vereador.adicionaProjeto(projeto);
+		this.daoVereador.save(vereador);
+		
+		this.dao.save(projeto);
+		result.include("projetos", this.dao.findAll());
 	}
 	
 	@Get("/listar")
 	public void lista() {
-		result.include("projetos", jdbc.listar(Projeto.listarTodos, Projeto.class));
+		result.include("projetos", this.dao.findAll());
 	}
 	
 	@Get("/filtrarNome")
 	public void lista(String filtro) {
-		result.include("projetos", jdbc.projetosNome(filtro));
+		result.include("projetos", this.dao.findByName(filtro));
 	}
 	
 	@Get("/projetoVereador")
@@ -78,7 +79,7 @@ public class ProjetoController {
 	
 	@Get("/filtrarVereador")
 	public void listaVereadores(String filtroVereador) {
-		result.include("projetos", jdbc.projetosPorVereador(filtroVereador)).redirectTo(this).projetoVereador();;
+		result.include("projetos", this.dao.projetosPorVereador(filtroVereador)).redirectTo(this).projetoVereador();;
 	}
 
 

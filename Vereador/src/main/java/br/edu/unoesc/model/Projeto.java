@@ -6,13 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Projeto")
-@NamedQueries({ @NamedQuery(name = Projeto.listarTodos, query = "select p from Projeto p") })
 public class Projeto {
 
 	@Id
@@ -22,8 +19,6 @@ public class Projeto {
 	private boolean aprovado;
 	private boolean apresentado;
 
-	public static final String listarTodos = "buscarTodosProjetos";
-	
 	@ManyToOne
 	@JoinColumn(name = "vereador_id")
 	private Vereador vereador;

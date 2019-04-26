@@ -1,5 +1,6 @@
 package br.edu.unoesc.controller;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Controller;
@@ -9,6 +10,7 @@ import br.com.caelum.vraptor.view.Results;
 
 
 @Controller
+@ApplicationScoped
 public class IndexController {
 	
 	@Inject

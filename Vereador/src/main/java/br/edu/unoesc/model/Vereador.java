@@ -9,16 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Vereador")
-@PrimaryKeyJoinColumn(name="codigo")
-@NamedQueries({ @NamedQuery(name = Vereador.listarTodos, query = "select v from Vereador v") })
+@Table(name = "Vereador")
+@PrimaryKeyJoinColumn(name = "codigo")
 public class Vereador extends Pessoa {
 
 	private Date dataAssociacao;
@@ -26,53 +23,50 @@ public class Vereador extends Pessoa {
 	@ManyToOne
 	@JoinColumn(name = "partido_codigo")
 	private Partido partido;
-	
-	@OneToMany(mappedBy = "vereador", targetEntity = Projeto.class, 
-	fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+
+	@OneToMany(mappedBy = "vereador", targetEntity = Projeto.class, fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	private Set<Projeto> projetos = new HashSet<Projeto>();
-	
-	public static final String listarTodos = "buscarTodosVereadores";
-	
-	public Integer qtdeProjetosApresentados(){
+
+	public Integer qtdeProjetosApresentados() {
 		Integer contador = 0;
 		for (Projeto projeto : projetos) {
-			if(projeto.isApresentado()) {
+			if (projeto.isApresentado()) {
 				contador++;
 			}
 		}
 		return contador;
 	}
-	
-	public Integer qtdeProjetosAprovados(){
+
+	public Integer qtdeProjetosAprovados() {
 		Integer contador = 0;
 		for (Projeto projeto : projetos) {
-			if(projeto.isAprovado()) {
+			if (projeto.isAprovado()) {
 				contador++;
 			}
 		}
 		return contador;
 	}
-	
-	public void adicionaProjeto(Projeto projeto){
+
+	public void adicionaProjeto(Projeto projeto) {
 		projetos.add(projeto);
 	}
-	
-	public Double desempenho(){
+
+	public Double desempenho() {
 		Integer ap = 0;
 		for (Projeto projeto : projetos) {
-			if(projeto.isAprovado()) {
+			if (projeto.isAprovado()) {
 				ap++;
 			}
 		}
-		if (projetos.isEmpty()){
-			return (double)0;
+		if (projetos.isEmpty()) {
+			return (double) 0;
 		}
-		return (double)((ap*100.0)/projetos.size());
+		return (double) ((ap * 100.0) / projetos.size());
 	}
 
-	public Vereador(Date dataAssociacao, Partido partido, Set<Projeto> projetos) {
+	public Vereador(Date data, Partido partido, Set<Projeto> projetos) {
 		super();
-		this.dataAssociacao = dataAssociacao;
+		this.dataAssociacao = data;
 		this.partido = partido;
 		this.projetos = projetos;
 	}
@@ -81,12 +75,12 @@ public class Vereador extends Pessoa {
 
 	}
 
-	public Date getDataAssociacao() {
+	public Date getData() {
 		return dataAssociacao;
 	}
 
-	public void setDataAssociação(Date dataAssociacao) {
-		this.dataAssociacao = dataAssociacao;
+	public void setData(Date data) {
+		this.dataAssociacao = data;
 	}
 
 	public Partido getPartido() {
@@ -107,8 +101,7 @@ public class Vereador extends Pessoa {
 
 	@Override
 	public String toString() {
-		return "Vereador : dataAssociação=" + dataAssociacao + ", partido=" + partido
-				+ ", projetos=" + projetos + "]";
+		return "Vereador [dataAssociacao=" + dataAssociacao + ", partido=" + partido + ", projetos=" + projetos + "]";
 	}
-	
+
 }
