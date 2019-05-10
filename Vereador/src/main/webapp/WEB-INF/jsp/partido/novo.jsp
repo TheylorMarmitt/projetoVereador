@@ -12,10 +12,10 @@
 <br>
 	<form style="margin-left: 2%" action= '<c:url value="/partido/enviar"></c:url>'  method= "post">
 		<div class="form-group">
-			<label>Nome: </label> <input required="required" type="text" name="partido.nome" />
+			<label>Nome: </label> <input required="required" type="text" name="nome" />
 		</div>
 		<div class="form-group">	
-			<label>Numero: </label> <input required="required" type="text" name="partido.numero" />
+			<label>Numero: </label> <input required="required" type="text" name="numero" />
 		</div>
 		<input type="submit" class="btn btn-primary" name="Enviar" />
 	</form>

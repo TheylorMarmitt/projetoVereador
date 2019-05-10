@@ -4,79 +4,66 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import br.com.caelum.vraptor.Controller;
-import br.com.caelum.vraptor.Get;
-import br.com.caelum.vraptor.Path;
-import br.com.caelum.vraptor.Post;
-import br.com.caelum.vraptor.Result;
+import br.edu.unoesc.dao.PartidoDao;
 import br.edu.unoesc.dao.VereadorDao;
 import br.edu.unoesc.model.Vereador;
 
 @Controller
-@Path("/vereador")
+@RequestMapping("/vereador")
 public class VereadorController {
 	
-	private Result result;
+	@Autowired
 	private VereadorDao dao;
-
-	public VereadorController() {
-
-	}
-
-	@Inject
-	public VereadorController(Result result, VereadorDao dao ) {
-		this.result = result;
-		this.dao = dao;
+	
+	@Autowired
+	private PartidoDao partidoDao;
+	
+	@RequestMapping(path = "/cadastro")
+	public String novo(Model model) {
+		model.addAttribute("partidos", this.partidoDao.findAll());
+		return "vereador/novo";
 	}
 	
-	@Get("/cadastro")
-	public void novo() {
-//		result.include("partidos", jdbcPartido.listar(Partido.listarTodos, Partido.class));
-		result.include("partidos", this.dao.partidos());
-	}
-	
-	@Post("/cadastro")
-	public void lista(Vereador vereador, String dataAssociacao) throws ParseException {
+	@RequestMapping(path = "/cadastro", method = RequestMethod.POST)
+	public String lista(Vereador vereador, String dataAsso,  Model model) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date parsed = format.parse(dataAssociacao);
-		vereador.setData(parsed);
-//		jdbc.inserir(vereador);
-//		result.include("vereadores", jdbc.listar(Vereador.listarTodos, Vereador.class));
-		this.dao.save(vereador);
-		result.include("vereadores", this.dao.findAll());
+		Date parsed = format.parse(dataAsso);
+		vereador.setDataAssociacao(parsed);
+		this.dao.saveAndFlush(vereador);
+		model.addAttribute("vereadores", this.dao.findAll());
+		return "vereador/lista";
 	}
 	
-	@Get("/listar")
-	public void lista() {
-//		result.include("vereadores", jdbc.listar(Vereador.listarTodos, Vereador.class));
-		result.include("vereadores", this.dao.findAll());
+	@RequestMapping(path = "/listar")
+	public String lista(Model model) {
+		model.addAttribute("vereadores", this.dao.findAll());
+		return "vereador/lista";
 	}
 	
-	@Get("filtrarNome")
-	public void lista(String filtroNome) {
-//		result.include("vereadores", jdbc.vereadorNome(filtroNome));
-		result.include("vereadores", this.dao.findByName(filtroNome));
+	@RequestMapping(path = "/filtrarNome")
+	public String lista(String filtroNome, Model model) {
+		model.addAttribute("vereadores", this.dao.findByNome(filtroNome));
+		return "vereador/lista";
 	}
 	
-	@Get("/filtrarPartido")
-	public void listaVereadores(String filtroPartido) {
-//		result.include("vereadores", jdbc.vereadorPartido(filtroPartido)).redirectTo(this).listaPartido();
-		result.include("vereadores", this.dao.vereadorPartido(filtroPartido)).redirectTo(this).listaPartido();
+	@RequestMapping(path = "/filtrarPartido")
+	public String listaVereadores(String filtroPartido, Model model) {
+		model.addAttribute("vereadores", this.dao.vereadorPartido(filtroPartido));
+		return "vereador/listaPartido";
 	}
-	
-	@Get("/filtroPartido")
-	public void listaPartido() {
-		
-	}
-	
-	@Get("/filtrarData")
-	public void lista(String dataInicio, String dataFim) throws ParseException {
+
+	@RequestMapping(path = "/filtrarData")
+	public String lista(String dataInicio, String dataFim, Model model) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date Inicio = format.parse(dataInicio);
 		Date Fim = format.parse(dataFim);
-		result.include("vereadores", this.dao.vereadorData(Inicio, Fim));
+		model.addAttribute("vereadores", this.dao.vereadorData(Inicio, Fim));
+		return "vereador/lista";
 	}
-
 }

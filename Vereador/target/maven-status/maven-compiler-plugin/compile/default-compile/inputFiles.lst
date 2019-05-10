@@ -1,11 +1,15 @@
 /Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/controller/IndexController.java
-/Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/dao/PartidoDao.java
 /Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/controller/PartidoController.java
+/Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/config/WebInitializer.java
 /Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/controller/VereadorController.java
-/Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/controller/ProjetoController.java
 /Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/model/Vereador.java
 /Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/model/Projeto.java
 /Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/dao/ProjetoDao.java
 /Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/dao/VereadorDao.java
 /Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/model/Pessoa.java
+/Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/config/SpringMvcConfig.java
+/Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/config/PersistenceConfig.java
 /Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/model/Partido.java
+/Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/dao/PartidoDao.java
+/Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/controller/ProjetoController.java
+/Users/TheylorMarmitt/Git/projetoVereador/Vereador/src/main/java/br/edu/unoesc/config/SpringConfig.java

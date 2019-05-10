@@ -75,10 +75,5 @@ public class Projeto {
 		this.vereador = vereador;
 	}
 
-	@Override
-	public String toString() {
-		return "Projeto [codigo=" + codigo + ", nome=" + nome + ", aprovado=" + aprovado + ", apresentado="
-				+ apresentado + ", vereador=" + vereador + "]";
-	}
 
 }

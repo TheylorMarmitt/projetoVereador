@@ -48,6 +48,9 @@ public class Vereador extends Pessoa {
 	}
 
 	public void adicionaProjeto(Projeto projeto) {
+		if(projetos.isEmpty()) {
+			projetos = new HashSet<Projeto>();
+		}
 		projetos.add(projeto);
 	}
 
@@ -75,12 +78,12 @@ public class Vereador extends Pessoa {
 
 	}
 
-	public Date getData() {
+	public Date getDataAssociacao() {
 		return dataAssociacao;
 	}
 
-	public void setData(Date data) {
-		this.dataAssociacao = data;
+	public void setDataAssociacao(Date dataAssociacao) {
+		this.dataAssociacao = dataAssociacao;
 	}
 
 	public Partido getPartido() {
@@ -99,9 +102,5 @@ public class Vereador extends Pessoa {
 		this.projetos = projetos;
 	}
 
-	@Override
-	public String toString() {
-		return "Vereador [dataAssociacao=" + dataAssociacao + ", partido=" + partido + ", projetos=" + projetos + "]";
-	}
 
 }

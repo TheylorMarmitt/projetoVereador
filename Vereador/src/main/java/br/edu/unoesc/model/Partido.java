@@ -52,10 +52,6 @@ public class Partido {
 		this.numero = numero;
 	}
 
-	@Override
-	public String toString() {
-		return "Partido [codigo=" + codigo + ", nome=" + nome + "]";
-	}
 
 
 }

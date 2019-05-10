@@ -12,7 +12,7 @@
 	<form style="margin-left: 2%" action= '<c:url value="/projeto/enviar"></c:url>'  method= "post">
 		<br>
 		<div class="form-group">
-			<label>Nome: </label> <input required="required" type="text" name="projeto.nome" />
+			<label>Nome: </label> <input required="required" type="text" name="nome" />
 		</div>
 			<label>Aprovado: </label>
 				<input id="radioAp" type="radio" name="aprovado" value=true  >
@@ -27,7 +27,7 @@
 	    		<label for="radioNApr">Não</label>
     	<br>
     	<label>Vereador:</label>
-    	<select class="browser-default custom-select" id= codigo name="projeto.vereador.codigo">
+    	<select class="browser-default custom-select" id= codigo name="vereador.codigo">
 			<c:forEach var="v" items="${vereadores}">
 				<option value="${v.codigo}">${v.nome}</option>
 			</c:forEach>

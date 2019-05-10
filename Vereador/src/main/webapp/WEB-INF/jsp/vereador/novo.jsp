@@ -13,13 +13,13 @@
 <form style="margin-left: 2%" action= '<c:url value="/vereador/cadastro"></c:url>'  method= "post">
 		<br>
 		<div class="form-group">
-			<label>Nome: </label> <input required="required" type="text" name="vereador.nome" />
+			<label>Nome: </label> <input required="required" type="text" name="nome" />
 		</div>	
 		<div class="form-group">
-			<label>Data de associação: </label> <input required="required" type="date" name="dataAssociacao" />
+			<label>Data de associação: </label> <input required="required" type="date" name="dataAsso" />
 		</div>
 		<label>Partido:</label>
-    	<select class="browser-default custom-select" id= codigo name="vereador.partido.codigo">
+    	<select class="browser-default custom-select" id= codigo name="partido.codigo">
 			<c:forEach var="p" items="${partidos}">
 				<option value="${p.codigo}">${p.nome}</option>
 			</c:forEach>

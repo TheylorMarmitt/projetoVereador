@@ -44,9 +44,4 @@ public class Pessoa {
 		this.nome = nome;
 	}
 
-	@Override
-	public String toString() {
-		return "Pessoa [codigo=" + codigo + ", nome=" + nome + "]";
-	}
-
 }

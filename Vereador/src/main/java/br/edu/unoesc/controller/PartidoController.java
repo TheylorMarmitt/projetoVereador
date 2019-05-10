@@ -1,47 +1,42 @@
 package br.edu.unoesc.controller;
 
-import javax.inject.Inject;
 
-import br.com.caelum.vraptor.Controller;
-import br.com.caelum.vraptor.Get;
-import br.com.caelum.vraptor.Path;
-import br.com.caelum.vraptor.Post;
-import br.com.caelum.vraptor.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import br.edu.unoesc.dao.PartidoDao;
 import br.edu.unoesc.model.Partido;
 
 @Controller
-@Path("/partido")
+@RequestMapping("/partido")
 public class PartidoController {
 
-	private Result result;
+	@Autowired
 	private PartidoDao dao;
 
-	public PartidoController() {
+	
+	@RequestMapping(path = "/cadastro")
+	public String cadastro() {
+		return "partido/novo";
+	}
 
+	@RequestMapping(path = "/enviar", method = RequestMethod.POST)
+	public String lista(Partido partido, Model model) {
+		dao.saveAndFlush(partido);
+		model.addAttribute("partidos", this.dao.findAll());
+		return "partido/lista";
+	}
+	
+	@RequestMapping(path = "/listar")
+	public String listar(Model model) {
+		model.addAttribute("partidos", this.dao.findAll());
+		return "partido/lista";
 	}
 
-	@Inject
-	public PartidoController(Result result, PartidoDao dao) {
-		this.result = result;
-		this.dao = dao;
-	}
 	
-	@Get("/cadastro")
-	public void novo() {
-	
-	}
-	
-	@Post("/enviar")
-	public void lista(Partido partido) {
-		this.dao.save(partido);
-		result.include("partidos", this.dao.findAll());
-	}
-	
-	@Get("/listar")
-	public void lista() {
-		result.include("partidos", this.dao.findAll());
-	}
 
 
 }

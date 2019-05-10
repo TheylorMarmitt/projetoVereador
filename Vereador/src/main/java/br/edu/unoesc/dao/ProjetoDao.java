@@ -6,21 +6,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import br.edu.unoesc.model.Projeto;
-import br.edu.unoesc.model.Vereador;
 
 public interface ProjetoDao extends JpaRepository<Projeto, Long> {
 
-	List<Projeto> findByName(String nome);
+	List<Projeto> findByNome(String nome);
 	
-	@Query("select p from Projeto p where p.vereador.nome like : filtro")
+	
+	
+	@Query("select p from Projeto p where p.vereador.nome like ?1%")
 	List<Projeto> projetosPorVereador(String filtro);
 	
-	@Query("select v from Vereador v where v.codigo = filtro")
-	List<Vereador> vereadorPorCodigo(Long filtro);
 	
-	@Query("select v from Vereador v")
-	List<Vereador> vereadores();
 	
-	@Query("select v from Vereador v where v.codigo = filtro")
-	Vereador buscaPorId(long filtro);
 }
+//@Query("select v from Vereador v where v.codigo like : filtro")

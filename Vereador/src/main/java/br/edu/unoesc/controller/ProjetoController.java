@@ -1,43 +1,35 @@
 package br.edu.unoesc.controller;
 
-import javax.inject.Inject;
 
-import br.com.caelum.vraptor.Controller;
-import br.com.caelum.vraptor.Get;
-import br.com.caelum.vraptor.Path;
-import br.com.caelum.vraptor.Post;
-import br.com.caelum.vraptor.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import br.edu.unoesc.dao.ProjetoDao;
 import br.edu.unoesc.dao.VereadorDao;
 import br.edu.unoesc.model.Projeto;
 import br.edu.unoesc.model.Vereador;
 
 @Controller
-@Path("/projeto")
+@RequestMapping("/projeto")
 public class ProjetoController {
 
-	private Result result;
+	@Autowired
 	private ProjetoDao dao;
+	
+	@Autowired
 	private VereadorDao daoVereador;
-
-	public ProjetoController() {
-
-	}
-
-	@Inject
-	public ProjetoController(Result result, ProjetoDao dao, VereadorDao daoVereador) {
-		this.result = result;
-		this.dao = dao;
-		this.daoVereador = daoVereador;
+	
+	@RequestMapping(path = "/cadastro")
+	public String cadastro(Model model) {
+		model.addAttribute("vereadores", this.daoVereador.findAll());
+		return "projeto/novo";
 	}
 	
-	@Get("/cadastro")
-	public void novo() {
-		result.include("vereadores", this.dao.vereadores());
-	}
-	
-	@Post("/enviar")
-	public void lista(Projeto projeto, String aprovado, String apresentado) {
+	@RequestMapping(path = "/enviar", method = RequestMethod.POST)
+	public String lista(Projeto projeto, String aprovado, String apresentado, Model model) {
 		if(aprovado.contentEquals("true")) {
 			projeto.setAprovado(true);
 		}else {
@@ -48,39 +40,34 @@ public class ProjetoController {
 		}else {
 			projeto.setApresentado(false);
 		}
-
-//		VereadorJDBC jdbcVereador = new VereadorJDBC() ;
-//		Vereador vereador =  jdbcVereador.buscar(Vereador.class, projeto.getVereador().getCodigo());
-//		vereador.adicionaProjeto(projeto);
-//		jdbcVereador.alterar(vereador);
+		Vereador vereador = this.daoVereador.findById(projeto.getVereador().getCodigo());
 		
-		Vereador vereador = this.dao.buscaPorId(projeto.getVereador().getCodigo());
+		projeto.setVereador(vereador);
 		vereador.adicionaProjeto(projeto);
-		this.daoVereador.save(vereador);
 		
-		this.dao.save(projeto);
-		result.include("projetos", this.dao.findAll());
+		this.daoVereador.saveAndFlush(vereador);
+		this.dao.saveAndFlush(projeto);
+
+		model.addAttribute("projetos", this.dao.findAll());
+		return "projeto/lista";
 	}
 	
-	@Get("/listar")
-	public void lista() {
-		result.include("projetos", this.dao.findAll());
+	@RequestMapping(path = "/listar")
+	public String lista(Model model) {
+		model.addAttribute("projetos", this.dao.findAll());
+		return "projeto/lista";
 	}
 	
-	@Get("/filtrarNome")
-	public void lista(String filtro) {
-		result.include("projetos", this.dao.findByName(filtro));
-	}
-	
-	@Get("/projetoVereador")
-	public void projetoVereador() {
-		
-	}
-	
-	@Get("/filtrarVereador")
-	public void listaVereadores(String filtroVereador) {
-		result.include("projetos", this.dao.projetosPorVereador(filtroVereador)).redirectTo(this).projetoVereador();;
+	@RequestMapping(path = "/filtrarNome")
+	public String lista(String filtro, Model model) {
+		model.addAttribute("projetos", this.dao.findByNome(filtro));
+		return "projeto/lista";
 	}
 
+	@RequestMapping(path = "/filtrarVereador")
+	public String cadastro(String filtroVereador, Model model) {
+		model.addAttribute("projetos", this.dao.projetosPorVereador(filtroVereador));
+		return "projeto/projetoVereador";
+	}
 
 }
